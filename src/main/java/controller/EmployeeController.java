@@ -69,6 +69,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Controller.createAccountController.getCreateAccountView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
 
         }
     }
@@ -77,7 +79,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.updateAccountController.getUpdateAccountView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
         }
     }
 
@@ -85,7 +88,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.deleteAccountController.getDeleteAccountView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
         }
     }
 
@@ -93,7 +97,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.viewAccountController.getViewAccountView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
         }
     }
 
@@ -109,7 +114,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.transferMoneyController.getTransferMoneyView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
         }
     }
 

@@ -6,4 +6,5 @@ public interface ClientInfoService {
     void updateClientInfo(String tfOldClientName, String tfNewClientName, String tfPersonalNumericalCode, String tfOldCardNumber, String tfNewCardNumber, String tfOldAddress, String tfNewAddress);
 
     void viewClientInfo(String tfClientName, String tfPersonalNumericalCode);
+
 }

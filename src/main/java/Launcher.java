@@ -16,7 +16,12 @@ public class Launcher {
                         new EmployeeController(new EmployeeView()),
                         new AddClientInfoController(new AddClientInfoView(),componentFactory.getClientInfoService()),
                         new UpdateClientInfoController(new UpdateClientInfoView(),componentFactory.getClientInfoService()),
-                        new ViewClientController(new ViewClientInfoView(),componentFactory.getClientInfoService())
+                        new ViewClientController(new ViewClientInfoView(),componentFactory.getClientInfoService()),
+                        new CreateAccountController(new CreateClientAccView(),componentFactory.getClientAccountService()),
+                        new UpdateAccountController(new UpdateClientAccView(),componentFactory.getClientAccountService()),
+                        new DeleteAccountController(new DeleteClientAccView(),componentFactory.getClientAccountService()),
+                        new ViewAccountController(new ViewClientAccView(),componentFactory.getClientAccountService()),
+                        new TransferMoneyController(new TransferMoneyView(),componentFactory.getClientAccountService())
         );
 
     }

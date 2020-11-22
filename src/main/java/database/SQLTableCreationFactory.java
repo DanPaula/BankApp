@@ -25,6 +25,7 @@ public class SQLTableCreationFactory {
                     "AccountType varchar(200),"+
                     "MoneyAmount int,"+
                     "CreationDate datetime default null,"+
+                    "AccountNumber varchar(200)," +
                     "primary key(id),"+
                     "constraint client_id foreign key (client_id) references ClientInfo (id) on delete cascade on update cascade);";
 

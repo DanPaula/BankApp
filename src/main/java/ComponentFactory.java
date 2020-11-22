@@ -1,6 +1,9 @@
+import controller.TransferMoneyController;
 import database.DBConnectionFactory;
 import repository.admin.AdminRepository;
 import repository.admin.AdminRepositoryMySQL;
+import repository.clientAccount.ClientAccountRepository;
+import repository.clientAccount.ClientAccountRepositoryMySQL;
 import repository.clientInfo.ClientInfoRepository;
 import repository.clientInfo.ClientInfoRepositoryMySQL;
 import repository.security.RightsRolesRepository;
@@ -11,6 +14,8 @@ import repository.user.UserRepository;
 import repository.user.UserRepositoryMySQL;
 import service.admin.AdminService;
 import service.admin.AdminServiceMySQL;
+import service.clientAccountService.ClientAccountService;
+import service.clientAccountService.ClientAccountServiceMySQL;
 import service.clientInfoService.ClientInfoService;
 import service.clientInfoService.ClientInfoServiceMySQL;
 import service.user.AuthenticationService;
@@ -30,6 +35,8 @@ public class ComponentFactory {
     private final AdminRepository adminRepository;
     private final ClientInfoRepository clientInfoRepository;
     private final ClientInfoService clientInfoService;
+    private final ClientAccountRepository clientAccountRepository;
+    private final ClientAccountService clientAccountService;
 
     private static ComponentFactory instance;
 
@@ -51,11 +58,15 @@ public class ComponentFactory {
         this.authenticationService = new AuthenticationServiceMySQL(this.userRepository, this.rightsRolesRepository, this.userRolesRepository);
         this.clientInfoRepository = new ClientInfoRepositoryMySQL(connection);
         this.clientInfoService=new ClientInfoServiceMySQL(this.clientInfoRepository);
+        this.clientAccountRepository = new ClientAccountRepositoryMySQL(connection);
+        this.clientAccountService=new ClientAccountServiceMySQL(this.clientAccountRepository);
     }
 
     public AdminService getAdminRepository(){return adminService;}
 
     public ClientInfoService getClientInfoService(){return clientInfoService;}
+
+    public ClientAccountService getClientAccountService(){return clientAccountService;}
 
     public AuthenticationService getAuthenticationService() {
         return authenticationService;

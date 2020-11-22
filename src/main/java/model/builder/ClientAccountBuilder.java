@@ -2,7 +2,7 @@ package model.builder;
 
 import model.ClientAccount;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 public class ClientAccountBuilder {
@@ -33,8 +33,13 @@ public class ClientAccountBuilder {
         return this;
     }
 
-    public ClientAccountBuilder setCreationData(Date creationData){
+    public ClientAccountBuilder setCreationData(Timestamp creationData){
         clientAccount.setCreationData(creationData);
+        return this;
+    }
+
+    public ClientAccountBuilder setAccountNumber(String accountNumber){
+        clientAccount.setAccountNumber(accountNumber);
         return this;
     }
 

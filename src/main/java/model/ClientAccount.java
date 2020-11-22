@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class ClientAccount {
 
@@ -9,7 +9,8 @@ public class ClientAccount {
     private int identificationNumber;
     private String accountType;
     private int moneyAmount;
-    private Date creationData;
+    private Timestamp creationData;
+    private String accountNumber;
 
     public Long getId() {
         return id;
@@ -43,12 +44,20 @@ public class ClientAccount {
         this.moneyAmount = moneyAmount;
     }
 
-    public Date getCreationData() {
+    public Timestamp getCreationData() {
         return creationData;
     }
 
-    public void setCreationData(Date creationData) {
+    public void setCreationData(Timestamp creationData) {
         this.creationData = creationData;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
 
