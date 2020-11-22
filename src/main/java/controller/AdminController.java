@@ -66,7 +66,8 @@ public class AdminController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.generateReportController.getGenerateView().setVisible(true);
+            Controller.adminController.getAdminView().setVisible(false);
         }
     }
 

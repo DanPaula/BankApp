@@ -7,6 +7,7 @@ import repository.security.UserRoleRepository;
 import repository.user.UserRepository;
 
 import java.security.MessageDigest;
+import java.sql.Timestamp;
 
 public class AdminServiceMySQL implements  AdminService{
 
@@ -26,7 +27,7 @@ public class AdminServiceMySQL implements  AdminService{
     public void createEmployee(String name,String username, String password) {
         UserBuilder user= new UserBuilder();
         userRepository.save(user.setUsername(username).setPassword(encodePassword(password)).build());
-        adminRepository.createEmployee(name);
+        adminRepository.createEmployee(name,username);
 
     }
 
@@ -47,6 +48,12 @@ public class AdminServiceMySQL implements  AdminService{
         userRepository.delete(username);
         adminRepository.deleteEmployee(name);
     }
+
+    @Override
+    public void generateReports(Timestamp tfStartingPeriod, Timestamp tfEndPeriod,String employeeName) {
+        adminRepository.generateReports(tfStartingPeriod,tfEndPeriod,employeeName);
+    }
+
 
     private String encodePassword(String password) {
         try {

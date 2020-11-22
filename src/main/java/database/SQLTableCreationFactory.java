@@ -32,8 +32,10 @@ public class SQLTableCreationFactory {
             case EMPLOYEEINFO:
                 return "create table if not exists Employee("+
                         "id int not null auto_increment,"+
+                        "user_id int not null,"+
                         "name varchar(200),"+
-                        "primary key(id));";
+                        "primary key(id),"+
+                        "constraint user_id foreign key(user_id) references user (id) on delete cascade on update cascade);";
 
             case EMPLOYEEACTIVITY:
                 return "create table if not exists EmployeeActivity("+
@@ -42,7 +44,7 @@ public class SQLTableCreationFactory {
                         "activity varchar(500),"+
                         "activityDate datetime default null,"+
                         "primary key(id),"+
-                        "constraint employee_id foreign key (employee_id) references Employee (id) on delete cascade on update cascade);";
+                        "constraint employee_id foreign key(employee_id) references Employee (id) on delete cascade on update cascade);";
 
             case USER:
                 return "CREATE TABLE IF NOT EXISTS user (" +

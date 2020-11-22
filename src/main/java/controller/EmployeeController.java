@@ -106,7 +106,8 @@ public class EmployeeController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            Controller.payBillsController.getPayBillsView().setVisible(true);
+            Controller.employeeController.getEmployeeView().setVisible(false);
         }
     }
 

@@ -7,13 +7,16 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Date;
 
 public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
     private final Connection connection;
+    private final AdminRepository adminRepository;
 
-    public ClientInfoRepositoryMySQL(Connection connection) {
+    public ClientInfoRepositoryMySQL(Connection connection,AdminRepository adminRepository) {
         this.connection = connection;
+        this.adminRepository=adminRepository;
     }
 
     @Override
@@ -29,6 +32,11 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+
+            Date date= new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+            adminRepository.addEmployeeActivity("create client",ts);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,6 +57,11 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+
+            Date date= new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+            adminRepository.addEmployeeActivity("update client",ts);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,9 +93,14 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
             }
             writer.close();
+            Date date= new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+            adminRepository.addEmployeeActivity("view client",ts);
             System.out.println("Successfully wrote to the file.");
         }catch(SQLException| IOException e){
             e.printStackTrace();
         }
     }
+
 }

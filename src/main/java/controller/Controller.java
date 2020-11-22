@@ -20,12 +20,15 @@ public class Controller {
     public static DeleteAccountController deleteAccountController;
     public static ViewAccountController viewAccountController;
     public static TransferMoneyController transferMoneyController;
+    public static GenerateReportController generateReportController;
+    public static PayBillsController payBillsController;
 
     public Controller(LoginController loginController, AdminController adminController, CreateEmployeeController createEmployeeController, ReadEmployeeController readEmployeeController, UpdateEmployeeController updateEmployeeController,
                       DeleteEmployeeController deleteEmployeeController, EmployeeController employeeController, AddClientInfoController addClientInfoController,
                       UpdateClientInfoController updateClientInfoController, ViewClientController viewClientController,
                       CreateAccountController createAccountController,UpdateAccountController updateAccountController, DeleteAccountController deleteAccountController,
-                      ViewAccountController viewAccountController, TransferMoneyController transferMoneyController) {
+                      ViewAccountController viewAccountController, TransferMoneyController transferMoneyController, GenerateReportController generateReportController,
+                      PayBillsController payBillsController) {
         this.loginController=loginController;
         this.adminController=adminController;
         this.createEmployeeController=createEmployeeController;
@@ -41,6 +44,8 @@ public class Controller {
         this.deleteAccountController = deleteAccountController;
         this.viewAccountController = viewAccountController;
         this.transferMoneyController = transferMoneyController;
+        this.generateReportController = generateReportController;
+        this.payBillsController = payBillsController;
 
     }
 }

@@ -36,7 +36,7 @@ public class AdminView extends JFrame {
         btnRead = new JButton("Read Employee");
         btnUpdate = new JButton("Update Employee");
         btnDelete = new JButton("Delete Employee");
-        btnReport = new JButton("Report Employee");
+        btnReport = new JButton("Generate Reports");
         btnBack = new JButton("Back");
     }
 

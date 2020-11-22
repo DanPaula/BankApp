@@ -14,4 +14,6 @@ public interface ClientAccountRepository {
     void viewAccount(int tfIdentificationNumber);
 
     void transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount);
+
+    void payBill(int tfMoneyAmount, String tfCompanyName,String clientName);
 }

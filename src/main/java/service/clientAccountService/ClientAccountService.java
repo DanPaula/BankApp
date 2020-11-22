@@ -11,4 +11,6 @@ public interface ClientAccountService {
     void viewAccount(int tfIdentificationNumber);
 
     void transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount);
+
+    void payBills(int tfMoneyAmount, String tfCompanyName,String clientName);
 }

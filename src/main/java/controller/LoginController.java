@@ -2,6 +2,7 @@ package controller;
 
 import model.User;
 import model.validation.Notification;
+import repository.admin.AdminRepository;
 import repository.user.AuthenticationException;
 import service.user.AuthenticationService;
 import view.LoginView;
@@ -14,10 +15,12 @@ import java.awt.event.ActionListener;
 public class LoginController {
     private final LoginView loginView;
     private final AuthenticationService authenticationService;
+    private final AdminRepository adminRepository;
 
-    public LoginController(LoginView loginView, AuthenticationService authenticationService) {
+    public LoginController(LoginView loginView, AuthenticationService authenticationService,AdminRepository adminRepository) {
         this.loginView = loginView;
         this.authenticationService = authenticationService;
+        this.adminRepository=adminRepository;
         loginView.setLoginButtonListener(new LoginButtonListener());
         //loginView.setRegisterButtonListener(new RegisterButtonListener());
     }
@@ -25,6 +28,8 @@ public class LoginController {
     public LoginView getLoginView() {
         return loginView;
     }
+
+    public void setId(String username){adminRepository.findIdByUsername(username);}
 
     private class LoginButtonListener implements ActionListener {
 
@@ -52,6 +57,7 @@ public class LoginController {
                     else if(authenticationService.UserRole(username,password).equals("employee")) {
                         Controller.employeeController.getEmployeeView().setVisible(true);
                         Controller.loginController.getLoginView().setVisible(false);
+                        Controller.loginController.setId(username);
                         //JOptionPane.showMessageDialog(loginView.getContentPane(), "Login successful!");
                     }
                 }

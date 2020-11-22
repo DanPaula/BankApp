@@ -61,4 +61,9 @@ public class ClientAccountServiceMySQL implements ClientAccountService {
     public void transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount) {
         clientAccountRepository.transferMoney(tfAccountNumberSender,tfAccountNumberReceiver,tfMoneyAmount);
     }
+
+    @Override
+    public void payBills(int tfMoneyAmount, String tfCompanyName,String clientName) {
+        clientAccountRepository.payBill(tfMoneyAmount,tfCompanyName,clientName);
+    }
 }

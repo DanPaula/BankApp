@@ -56,13 +56,15 @@ public class ComponentFactory {
         this.adminRepository=new AdminRepositoryMySQL(connection);
         this.adminService = new AdminServiceMySQL(this.userRepository, this.rightsRolesRepository, this.userRolesRepository, adminRepository);
         this.authenticationService = new AuthenticationServiceMySQL(this.userRepository, this.rightsRolesRepository, this.userRolesRepository);
-        this.clientInfoRepository = new ClientInfoRepositoryMySQL(connection);
+        this.clientInfoRepository = new ClientInfoRepositoryMySQL(connection,adminRepository);
         this.clientInfoService=new ClientInfoServiceMySQL(this.clientInfoRepository);
-        this.clientAccountRepository = new ClientAccountRepositoryMySQL(connection);
+        this.clientAccountRepository = new ClientAccountRepositoryMySQL(connection,this.adminRepository);
         this.clientAccountService=new ClientAccountServiceMySQL(this.clientAccountRepository);
     }
 
     public AdminService getAdminRepository(){return adminService;}
+
+    public AdminRepository getAdminRepository2(){return adminRepository;}
 
     public ClientInfoService getClientInfoService(){return clientInfoService;}
 
