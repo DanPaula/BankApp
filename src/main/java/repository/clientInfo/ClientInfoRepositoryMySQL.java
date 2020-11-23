@@ -1,6 +1,7 @@
 package repository.clientInfo;
 
 import model.ClientInfo;
+import model.validation.Notification;
 import repository.admin.AdminRepository;
 
 import java.io.BufferedWriter;
@@ -20,7 +21,8 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
     }
 
     @Override
-    public void addClientInfo(ClientInfo clientInfo) {
+    public Notification<Boolean> addClientInfo(ClientInfo clientInfo) {
+        Notification<Boolean> addClientNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("INSERT INTO ClientInfo values (null, ?, ?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -32,20 +34,22 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
-
+            addClientNotification.setResult(true);
             Date date= new Date();
             long time = date.getTime();
             Timestamp ts = new Timestamp(time);
             adminRepository.addEmployeeActivity("create client",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            addClientNotification.setResult(false);
+            addClientNotification.addError("Cannot add client: name, CNP, address or card number might be wrong");
         }
-
+        return addClientNotification;
     }
 
     @Override
-    public void updateClientInfo(String tfOldClientName, String tfNewClientName, String tfOldAddress, String tfNewAddress, String tfOldCardNumber, String tfNewCardNumber, String tfPersonalNumericalCode) {
+    public Notification<Boolean> updateClientInfo(String tfOldClientName, String tfNewClientName, String tfOldAddress, String tfNewAddress, String tfOldCardNumber, String tfNewCardNumber, String tfPersonalNumericalCode) {
+        Notification<Boolean> updateClientNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("update ClientInfo set ClientName=?, CardNumber=?, Adress=? where PersonalNumericalCode=?", Statement.RETURN_GENERATED_KEYS);
@@ -57,6 +61,7 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+            updateClientNotification.setResult(true);
 
             Date date= new Date();
             long time = date.getTime();
@@ -64,12 +69,15 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
             adminRepository.addEmployeeActivity("update client",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            updateClientNotification.setResult(false);
+            updateClientNotification.addError("Cannot update client: name, CNP, address or card number might be wrong");
         }
+        return updateClientNotification;
     }
 
     @Override
-    public void viewClientInfo(String tfClientName, String tfPersonalNumericalCode) {
+    public Notification<Boolean> viewClientInfo(String tfClientName, String tfPersonalNumericalCode) {
+        Notification<Boolean> viewClientNotification = new Notification<>();
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("InformationForClient.txt"));
 
@@ -97,10 +105,15 @@ public class ClientInfoRepositoryMySQL implements ClientInfoRepository{
             long time = date.getTime();
             Timestamp ts = new Timestamp(time);
             adminRepository.addEmployeeActivity("view client",ts);
-            System.out.println("Successfully wrote to the file.");
+
+            viewClientNotification.setResult(true);
+
         }catch(SQLException| IOException e){
-            e.printStackTrace();
+
+            viewClientNotification.setResult(false);
+            viewClientNotification.addError("name or CNP might be wrong");
         }
+        return viewClientNotification;
     }
 
 }

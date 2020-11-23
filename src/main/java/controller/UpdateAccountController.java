@@ -1,9 +1,11 @@
 package controller;
 
+import model.validation.Notification;
 import service.clientAccountService.ClientAccountService;
 import view.CreateClientAccView;
 import view.UpdateClientAccView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +28,15 @@ public class UpdateAccountController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientAccountService. updateAccount(updateClientAccView.getTfIdentificationNumber(),updateClientAccView.getTfAccountType(),updateClientAccView.getTfMoneyAmount());
+            Notification<Boolean> addClientNotification;
+            addClientNotification = clientAccountService. updateAccount(updateClientAccView.getTfIdentificationNumber(),updateClientAccView.getTfAccountType(),updateClientAccView.getTfMoneyAmount());
+
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+
+                if(addClientNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(updateClientAccView.getContentPane(), addClientNotification.getFormattedErrors());
+                }
         }
     }
 

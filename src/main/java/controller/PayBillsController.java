@@ -1,11 +1,13 @@
 package controller;
 
 import model.ClientAccount;
+import model.validation.Notification;
 import service.clientAccountService.ClientAccountService;
 import service.clientInfoService.ClientInfoService;
 import view.AddClientInfoView;
 import view.PayBillsView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,7 +31,15 @@ public class PayBillsController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientAccountService.payBills(payBillsView.getTfMoneyAmount(),payBillsView.getTfCompanyName(),payBillsView.getTfClientName());
+            Notification<Boolean> addClientNotification;
+            addClientNotification = clientAccountService.payBills(payBillsView.getTfMoneyAmount(),payBillsView.getTfCompanyName(),payBillsView.getTfClientName());
+
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+
+                if(addClientNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(payBillsView.getContentPane(), addClientNotification.getFormattedErrors());
+                }
         }
     }
 

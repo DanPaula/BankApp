@@ -1,16 +1,14 @@
 package repository.clientInfo;
 
 import model.ClientInfo;
-import model.builder.ClientInfoBuilder;
-
-import java.sql.Timestamp;
+import model.validation.Notification;
 
 public interface ClientInfoRepository {
 
-    void addClientInfo(ClientInfo clientInfo);
+    Notification<Boolean> addClientInfo(ClientInfo clientInfo);
 
-    void updateClientInfo(String tfOldClientName, String tfNewClientName, String tfOldAddress, String tfNewAddress, String tfOldCardNumber, String tfNewCardNumber, String tfPersonalNumericalCode);
+    Notification<Boolean> updateClientInfo(String tfOldClientName, String tfNewClientName, String tfOldAddress, String tfNewAddress, String tfOldCardNumber, String tfNewCardNumber, String tfPersonalNumericalCode);
 
-    void viewClientInfo(String tfClientName, String tfPersonalNumericalCode);
+    Notification<Boolean> viewClientInfo(String tfClientName, String tfPersonalNumericalCode);
 
 }

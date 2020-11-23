@@ -58,7 +58,7 @@ public class AuthenticationServiceMySQL implements AuthenticationService {
 
     @Override
     public boolean logout(User user) {
-        return false;
+       return false;
     }
 
     @Override

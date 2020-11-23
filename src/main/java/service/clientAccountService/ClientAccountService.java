@@ -1,16 +1,18 @@
 package service.clientAccountService;
 
+import model.validation.Notification;
+
 public interface ClientAccountService {
 
-    void createAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount,String accountNumber);
+    Notification<Boolean> createAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount, String accountNumber);
 
-    void updateAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount);
+    Notification<Boolean> updateAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount);
 
-    void deleteAccount(int tfIdentificationNumber,String getTfAccountType);
+    Notification<Boolean> deleteAccount(int tfIdentificationNumber,String getTfAccountType);
 
-    void viewAccount(int tfIdentificationNumber);
+    Notification<Boolean> viewAccount(int tfIdentificationNumber);
 
-    void transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount);
+    Notification<Boolean> transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount);
 
-    void payBills(int tfMoneyAmount, String tfCompanyName,String clientName);
+    Notification<Boolean> payBills(int tfMoneyAmount, String tfCompanyName,String clientName);
 }

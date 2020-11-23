@@ -1,9 +1,11 @@
 package controller;
 
+import model.validation.Notification;
 import service.clientAccountService.ClientAccountService;
 import view.CreateClientAccView;
 import view.DeleteClientAccView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +29,17 @@ public class DeleteAccountController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientAccountService. deleteAccount(deleteClientAccView.getTfIdentificationNumber(),deleteClientAccView.getTfAccountType());
+
+            Notification<Boolean> deleteAccountNotification;
+            deleteAccountNotification =  clientAccountService. deleteAccount(deleteClientAccView.getTfIdentificationNumber(),deleteClientAccView.getTfAccountType());
+
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+
+                if(deleteAccountNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(deleteClientAccView.getContentPane(), deleteAccountNotification.getFormattedErrors());
+                }
+
         }
     }
 

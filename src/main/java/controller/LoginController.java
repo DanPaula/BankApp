@@ -22,7 +22,7 @@ public class LoginController {
         this.authenticationService = authenticationService;
         this.adminRepository=adminRepository;
         loginView.setLoginButtonListener(new LoginButtonListener());
-        //loginView.setRegisterButtonListener(new RegisterButtonListener());
+        loginView.setLogoutButtonListener(new LogoutButtonListener());
     }
 
     public LoginView getLoginView() {
@@ -30,6 +30,14 @@ public class LoginController {
     }
 
     public void setId(String username){adminRepository.findIdByUsername(username);}
+
+    private class LogoutButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loginView.setUsername();
+            loginView.setPassword();
+        }
+    }
 
     private class LoginButtonListener implements ActionListener {
 

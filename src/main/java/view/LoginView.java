@@ -12,7 +12,7 @@ public class LoginView extends JFrame {
     private JTextField tfUsername;
     private JPasswordField tfPassword;
     private JButton btnLogin;
-    //private JButton btnRegister;
+    private JButton btnLogout;
 
     public LoginView() throws HeadlessException {
         setSize(300, 300);
@@ -22,7 +22,7 @@ public class LoginView extends JFrame {
         add(tfUsername);
         add(tfPassword);
         add(btnLogin);
-        //add(btnRegister);
+        add(btnLogout);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -31,7 +31,7 @@ public class LoginView extends JFrame {
         tfUsername = new JTextField();
         tfPassword = new JPasswordField();
         btnLogin = new JButton("Login");
-        //btnRegister = new JButton("Register");
+        btnLogout = new JButton("Logout");
     }
 
     public String getUsername() {
@@ -42,12 +42,17 @@ public class LoginView extends JFrame {
         return tfPassword.getText();
     }
 
+    public void setUsername() {tfUsername.setText("");}
+
+    public void setPassword() {tfPassword.setText("");
+    }
+
     public void setLoginButtonListener(ActionListener loginButtonListener) {
         btnLogin.addActionListener(loginButtonListener);
     }
 
-   /* public void setRegisterButtonListener(ActionListener registerButtonListener) {
-        btnRegister.addActionListener(registerButtonListener);
-    }*/
+    public void setLogoutButtonListener(ActionListener logoutButtonListener) {
+        btnLogout.addActionListener(logoutButtonListener);
+    }
 
 }

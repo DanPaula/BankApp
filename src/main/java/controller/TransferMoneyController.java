@@ -1,9 +1,11 @@
 package controller;
 
+import model.validation.Notification;
 import service.clientAccountService.ClientAccountService;
 import view.DeleteClientAccView;
 import view.TransferMoneyView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +30,16 @@ public class TransferMoneyController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientAccountService.transferMoney(transferMoneyView.getTfAccountNumberSender(),transferMoneyView.getTfAccountNumberReceiver(),transferMoneyView.getTfMoneyAmount());
+            Notification<Boolean> addClientNotification ;
+            addClientNotification = clientAccountService.transferMoney(transferMoneyView.getTfAccountNumberSender(),transferMoneyView.getTfAccountNumberReceiver(),transferMoneyView.getTfMoneyAmount());
+
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+
+                if(addClientNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(transferMoneyView.getContentPane(), addClientNotification.getFormattedErrors());
+                }
+
         }
     }
 

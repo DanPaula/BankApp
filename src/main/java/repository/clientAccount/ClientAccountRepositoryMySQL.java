@@ -1,6 +1,8 @@
 package repository.clientAccount;
 
 import model.ClientAccount;
+import model.User;
+import model.validation.Notification;
 import repository.admin.AdminRepository;
 
 import java.io.BufferedWriter;
@@ -22,7 +24,8 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
     }
 
     @Override
-    public void createAccount(ClientAccount clientAccount) {
+    public Notification<Boolean> createAccount(ClientAccount clientAccount) {
+        Notification<Boolean> createAccountNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("INSERT INTO ClientAccount values (null,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -36,6 +39,7 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+            createAccountNotification.setResult(true);
 
             java.util.Date date= new Date();
             long time = date.getTime();
@@ -43,8 +47,10 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             adminRepository.addEmployeeActivity("create account",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            createAccountNotification.setResult(false);
+            createAccountNotification.addError("Cannot create account: identification number, account type, money amount or account number might be wrong");
         }
+        return createAccountNotification;
     }
 
     @Override
@@ -80,7 +86,8 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
     }
 
     @Override
-    public void updateAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount) {
+    public Notification<Boolean> updateAccount(int tfIdentificationNumber, String tfAccountType, int tfMoneyAmount) {
+        Notification<Boolean> updateAccountNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("update ClientAccount set AccountType = ?, MoneyAmount = ? where IdentificationNumber=?;", Statement.RETURN_GENERATED_KEYS);
@@ -91,6 +98,7 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+            updateAccountNotification.setResult(true);
 
             Date date= new Date();
             long time = date.getTime();
@@ -98,12 +106,15 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             adminRepository.addEmployeeActivity("update account",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            updateAccountNotification.setResult(false);
+            updateAccountNotification.addError("Cannot update account: identification number, account type or money amount might be wrong");
         }
+        return updateAccountNotification;
     }
 
     @Override
-    public void delete(int tfIdentificationNumber,String TfAccountType) {
+    public Notification<Boolean> delete(int tfIdentificationNumber,String TfAccountType) {
+        Notification<Boolean> deleteAccountNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("delete from ClientAccount where IdentificationNumber=? and AccountType = ?;", Statement.RETURN_GENERATED_KEYS);
@@ -113,6 +124,7 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
+            deleteAccountNotification.setResult(true);
 
             Date date= new Date();
             long time = date.getTime();
@@ -120,12 +132,15 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             adminRepository.addEmployeeActivity("delete account",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            deleteAccountNotification.setResult(false);
+            deleteAccountNotification.addError("Cannot delete account: identification number or account type might be wrong");
         }
+        return deleteAccountNotification;
     }
 
     @Override
-    public void viewAccount(int tfIdentificationNumber) {
+    public Notification<Boolean> viewAccount(int tfIdentificationNumber) {
+        Notification<Boolean> viewAccountNotification = new Notification<>();
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("AccountInformationClient.txt"));
 
@@ -148,6 +163,7 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
                 writer.write("\n");
 
             }
+            viewAccountNotification.setResult(true);
             writer.close();
             Date date= new Date();
             long time = date.getTime();
@@ -155,12 +171,15 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             adminRepository.addEmployeeActivity("view account",ts);
             System.out.println("Successfully wrote to the file.");
         }catch(SQLException| IOException e){
-            e.printStackTrace();
+            viewAccountNotification.setResult(false);
+            viewAccountNotification.addError("Cannot view account: identification number might be wrong");
         }
+        return viewAccountNotification;
     }
 
     @Override
-    public void transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount) {
+    public Notification<Boolean> transferMoney(String tfAccountNumberSender, String tfAccountNumberReceiver,int tfMoneyAmount) {
+        Notification<Boolean> transferMoneyNotification = new Notification<>();
         try {
 
             PreparedStatement senderMoneyStatement = connection
@@ -193,18 +212,23 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             updateMoneyReceiverStatement.setString(2,tfAccountNumberReceiver);
             updateMoneyReceiverStatement.executeUpdate();
 
+            transferMoneyNotification.setResult(true);
+
             Date date= new Date();
             long time = date.getTime();
             Timestamp ts = new Timestamp(time);
             adminRepository.addEmployeeActivity("transfer money",ts);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            transferMoneyNotification.setResult(false);
+            transferMoneyNotification.addError("Cannot view account: identification number might be wrong");
         }
+        return transferMoneyNotification;
     }
 
     @Override
-    public void payBill(int tfMoneyAmount, String tfCompanyName,String clientName) {
+    public Notification<Boolean> payBill(int tfMoneyAmount, String tfCompanyName,String clientName) {
+        Notification<Boolean> payBillNotification = new Notification<>();
         try {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("Bill.txt"));
@@ -232,6 +256,7 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
             updateMoneyStatement.executeUpdate();
 
             billPayment(id,tfCompanyName);
+            payBillNotification.setResult(true);
 
             Date date= new Date();
             long time = date.getTime();
@@ -240,11 +265,13 @@ public class ClientAccountRepositoryMySQL implements ClientAccountRepository{
 
 
         } catch (SQLException|IOException e) {
-            e.printStackTrace();
+            payBillNotification.setResult(false);
+            payBillNotification.addError("Cannot pay bill something might be wrong");
         }
+        return payBillNotification;
     }
 
-    public void billPayment(long client_id ,String companyName) {
+    public void billPayment(long client_id , String companyName) {
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("Bill.txt"));
 

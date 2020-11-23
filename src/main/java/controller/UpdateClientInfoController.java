@@ -1,9 +1,11 @@
 package controller;
 
+import model.validation.Notification;
 import service.clientInfoService.ClientInfoService;
 import view.AddClientInfoView;
 import view.UpdateClientInfoView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +28,14 @@ public class UpdateClientInfoController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientInfoService.updateClientInfo(updateClientInfoView.getTfOldClientName(),updateClientInfoView.getTfNewClientName(),updateClientInfoView.getTfPersonalNumericalCode(),updateClientInfoView.getTfOldCardNumber(),updateClientInfoView.getTfNewCardNumber(),updateClientInfoView.getTfOldAddress(),updateClientInfoView.getTfNewAddress());
+            Notification<Boolean> addClientNotification;
+            addClientNotification = clientInfoService.updateClientInfo(updateClientInfoView.getTfOldClientName(),updateClientInfoView.getTfNewClientName(),updateClientInfoView.getTfPersonalNumericalCode(),updateClientInfoView.getTfOldCardNumber(),updateClientInfoView.getTfNewCardNumber(),updateClientInfoView.getTfOldAddress(),updateClientInfoView.getTfNewAddress());
+
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+                if(addClientNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(updateClientInfoView.getContentPane(), addClientNotification.getFormattedErrors());
+                }
         }
     }
 

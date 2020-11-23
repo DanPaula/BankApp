@@ -1,10 +1,13 @@
 package service.clientInfoService;
 
+import model.User;
+import model.validation.Notification;
+
 public interface ClientInfoService {
-    void addClientInfo(String tfClientName, String tfPersonalNumericalCode, String tfCardNumber, String tfAddress);
+    Notification<Boolean> addClientInfo(String tfClientName, String tfPersonalNumericalCode, String tfCardNumber, String tfAddress);
 
-    void updateClientInfo(String tfOldClientName, String tfNewClientName, String tfPersonalNumericalCode, String tfOldCardNumber, String tfNewCardNumber, String tfOldAddress, String tfNewAddress);
+    Notification<Boolean> updateClientInfo(String tfOldClientName, String tfNewClientName, String tfPersonalNumericalCode, String tfOldCardNumber, String tfNewCardNumber, String tfOldAddress, String tfNewAddress);
 
-    void viewClientInfo(String tfClientName, String tfPersonalNumericalCode);
+    Notification<Boolean> viewClientInfo(String tfClientName, String tfPersonalNumericalCode);
 
 }

@@ -1,10 +1,13 @@
 package controller;
 
+import model.User;
+import model.validation.Notification;
 import service.admin.AdminService;
 import service.clientInfoService.ClientInfoService;
 import view.AddClientInfoView;
 import view.CreateEmployeeView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +31,14 @@ public class AddClientInfoController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+
+            Notification<Boolean> addClientNotification;
+            addClientNotification = clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+            //clientInfoService.addClientInfo(addClientInfoView.getTfClientName(),addClientInfoView.getTfPersonalNumericalCode(),addClientInfoView.getTfCardNumber(),addClientInfoView.getTfAddress());
+                if(addClientNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(addClientInfoView.getContentPane(), addClientNotification.getFormattedErrors());
+                }
         }
     }
 

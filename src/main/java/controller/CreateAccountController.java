@@ -1,9 +1,12 @@
 package controller;
 
+import model.User;
+import model.validation.Notification;
 import service.clientAccountService.ClientAccountService;
 import service.clientInfoService.ClientInfoService;
 import view.CreateClientAccView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +30,13 @@ public class CreateAccountController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            clientAccountService. createAccount(createClientAccView.getTfIdentificationNumber(),createClientAccView.getTfAccountType(),createClientAccView.getTfMoneyAmount(),createClientAccView.getTfAccountNumber());
+            Notification<Boolean> createAccountNotification ;
+            createAccountNotification = clientAccountService. createAccount(createClientAccView.getTfIdentificationNumber(),createClientAccView.getTfAccountType(),createClientAccView.getTfMoneyAmount(),createClientAccView.getTfAccountNumber());
+                if(createAccountNotification.hasErrors())
+                {
+                    JOptionPane.showMessageDialog(createClientAccView.getContentPane(), createAccountNotification.getFormattedErrors());
+                }
+
         }
     }
 
