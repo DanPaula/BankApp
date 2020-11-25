@@ -1,8 +1,7 @@
 package controller;
 
-import view.CreateClientAccView;
-import view.EmployeeView;
-import view.TransferMoneyView;
+import controller.admin.*;
+import controller.employee.*;
 
 public class Controller {
     public static LoginController loginController;

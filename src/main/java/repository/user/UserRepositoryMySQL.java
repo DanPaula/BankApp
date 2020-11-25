@@ -32,9 +32,10 @@ public class UserRepositoryMySQL implements UserRepository {
     public Notification<User> findByUsernameAndPassword(String username, String password) throws AuthenticationException {
         Notification<User> findByUsernameAndPasswordNotification = new Notification<>();
         try {
-            Statement statement = connection.createStatement();
-            String fetchUserSql = "Select * from `" + USER + "` where `username`=\'" + username + "\' and `password`=\'" + password + "\'";
-            ResultSet userResultSet = statement.executeQuery(fetchUserSql);
+            PreparedStatement statement = connection
+                    .prepareStatement("Select * from `" + USER + "` where `username`=\'" + username + "\' and `password`=\'" + password + "\'");
+
+            ResultSet userResultSet = statement.executeQuery();
             if (userResultSet.next()) {
                 User user = new UserBuilder()
                         .setUsername(userResultSet.getString("username"))
