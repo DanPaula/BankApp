@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AuthentificationServiceMySQLTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-11-25T17:06:27" hostname="LAPTOP-AHC2IA74" time="0.058">
+  <properties/>
+  <testcase name="register" classname="AuthentificationServiceMySQLTest" time="0.042"/>
+  <testcase name="login" classname="AuthentificationServiceMySQLTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+]]></system-err>
+</testsuite>
